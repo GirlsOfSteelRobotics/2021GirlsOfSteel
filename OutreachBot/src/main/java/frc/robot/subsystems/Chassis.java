@@ -75,7 +75,7 @@ public class Chassis extends SubsystemBase {
     }
 
     public void driveByJoystick(double joystickSpeed, double joystickSteer) {
-        m_mecanumDrive.
+        m_mecanumDrive.driveCartesian(joystickSpeed, 0, joystickSteer);
     }
 
 }
