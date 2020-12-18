@@ -58,7 +58,7 @@ public class ExtendCollector extends CommandBase {
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        m_collector.stopCollector();
+        m_collector.stopFourbar();
     }
 
     // Returns true when the command should end.

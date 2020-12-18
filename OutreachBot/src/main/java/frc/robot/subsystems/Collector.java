@@ -83,7 +83,7 @@ public class Collector extends SubsystemBase {
         m_collector.set(-COLLECTOR_SPEED);
     }
 
-    public void stopCollector() {
+    public void stopIntake() {
         m_collector.set(0); 
     }
 
