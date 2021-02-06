@@ -5,6 +5,7 @@ on: [push]
 jobs:
   build_outreach:
     strategy:
+      fail-fast: false
       matrix:
         platform: [ubuntu-latest, macos-latest, windows-latest]
     runs-on: ${{ matrix.platform }}
@@ -23,6 +24,7 @@ jobs:
 
   build_infinite_recharge_robot:
     strategy:
+      fail-fast: false
       matrix:
         platform: [ubuntu-latest, macos-latest, windows-latest]
     runs-on: ${{ matrix.platform }}
