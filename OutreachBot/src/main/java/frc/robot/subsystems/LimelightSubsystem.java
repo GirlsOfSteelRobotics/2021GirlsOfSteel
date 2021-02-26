@@ -6,20 +6,30 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class LimelightSubsystem extends SubsystemBase {
-    private final NetworkTableEntry m_tx;
-    private final NetworkTableEntry m_ty;
-    private final NetworkTableEntry m_ta;
-    private final NetworkTableEntry m_tv;
+    private final NetworkTableEntry m_yawAngle;
+    private final NetworkTableEntry m_elevationAngle;
+    private final NetworkTableEntry m_targetArea;
+    private final NetworkTableEntry m_targetVisibility;
     public LimelightSubsystem() {
-        m_tx = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx");
-        m_ta = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ta");
-        m_ty = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ty");
-        m_tv = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tv");
+        m_yawAngle = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx");
+        m_targetArea = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ta");
+        m_elevationAngle = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ty");
+        m_targetVisibility = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tv");
     }
-public double limelightAngle () {
-      return 0;
+    public double limelightAngle () {
+          return m_yawAngle.getDouble(-999);
+    }
 
-}
+
+    public boolean targetExists(){
+        return m_targetVisibility.getBoolean(false);
+    }
+
+    public double limelightDistance(){
+        return 0;
+    }
+
+
 
 
 
