@@ -87,7 +87,7 @@ public class RobotContainer {
         CommandScheduler.getInstance().onCommandInterrupt(command ->  System.out.println(command.getName() + " was interrupted"));
 
         PropertyManager.purgeExtraKeys();
-        SmartDashboard.putData((Sendable) TrajectorySlalom.slalom(m_chassis));
+        SmartDashboard.putData("SlalomPath", (Sendable) TrajectorySlalom.slalom(m_chassis));
     }
 
     /**

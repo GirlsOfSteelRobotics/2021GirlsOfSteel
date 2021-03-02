@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.spline.Spline;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryGenerator;
+import edu.wpi.first.wpilibj.util.Units;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -24,7 +25,7 @@ public class TrajectoryUtils {
             while ((line = reader.readLine()) != null) {
                 StringTokenizer tokenizer = new StringTokenizer(line, ",");
                 double xPath = Double.parseDouble(tokenizer.nextToken());
-                double yPath = Double.parseDouble(tokenizer.nextToken());
+                double yPath = Double.parseDouble(tokenizer.nextToken()) - Units.feetToMeters(15.0);
                 double xTangent = Double.parseDouble(tokenizer.nextToken());
                 double yTangent = Double.parseDouble(tokenizer.nextToken());
                 list.add(new Spline.ControlVector(
