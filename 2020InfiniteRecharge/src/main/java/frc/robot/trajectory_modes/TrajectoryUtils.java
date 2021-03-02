@@ -5,6 +5,10 @@ import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj.util.Units;
+import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.commands.autonomous.FollowTrajectory;
+import frc.robot.commands.autonomous.SetStartingPosition;
+import frc.robot.subsystems.Chassis;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -25,7 +29,7 @@ public class TrajectoryUtils {
             while ((line = reader.readLine()) != null) {
                 StringTokenizer tokenizer = new StringTokenizer(line, ",");
                 double xPath = Double.parseDouble(tokenizer.nextToken());
-                double yPath = Double.parseDouble(tokenizer.nextToken()) - Units.feetToMeters(15.0);
+                double yPath = Double.parseDouble(tokenizer.nextToken()) + Units.feetToMeters(15.0);
                 double xTangent = Double.parseDouble(tokenizer.nextToken());
                 double yTangent = Double.parseDouble(tokenizer.nextToken());
                 list.add(new Spline.ControlVector(
@@ -37,6 +41,13 @@ public class TrajectoryUtils {
             throw new RuntimeException(e);
         }
         return TrajectoryGenerator.generateTrajectory(list, trajectoryConfig);
+    }
+
+    public static Command startTrajectory(String fileName, TrajectoryConfig trajectoryConfig, Chassis chassis) {
+        Trajectory trajectory = loadingTrajectory(fileName, trajectoryConfig);
+        FollowTrajectory followTrajectory = new FollowTrajectory(trajectory, chassis);
+        SetStartingPosition setPosition = new SetStartingPosition(chassis, trajectory.getInitialPose());
+        return setPosition.andThen(followTrajectory);
     }
 }
 
