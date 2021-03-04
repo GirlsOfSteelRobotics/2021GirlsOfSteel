@@ -3,9 +3,12 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.util.Units;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class LimelightSubsystem extends SubsystemBase {
+    private final static double OBJECT_HEIGHT = Units.feetToMeters(10);
+    private final static double ROBOT_HEIGHT = Units.feetToMeters(3);
     private final NetworkTableEntry m_yawAngle;
     private final NetworkTableEntry m_elevationAngle;
     private final NetworkTableEntry m_targetArea;
@@ -15,6 +18,7 @@ public class LimelightSubsystem extends SubsystemBase {
         m_targetArea = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ta");
         m_elevationAngle = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ty");
         m_targetVisibility = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tv");
+
     }
     public double limelightAngle () {
           return m_yawAngle.getDouble(-999);
@@ -26,8 +30,10 @@ public class LimelightSubsystem extends SubsystemBase {
     }
 
     public double limelightDistance(){
-        return 0;
+        double d = (OBJECT_HEIGHT-ROBOT_HEIGHT)/Math.tan(Math.toRadians(m_elevationAngle.getDouble(-999)));
+        return d;
     }
+
 
 
 
