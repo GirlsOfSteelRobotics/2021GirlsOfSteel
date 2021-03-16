@@ -20,6 +20,7 @@ public class TrajectoryUtils {
     //reads file & spits out trajectory
     public static Trajectory loadingTrajectory(String fileName, TrajectoryConfig trajectoryConfig) {
         TrajectoryGenerator.ControlVectorList list = new TrajectoryGenerator.ControlVectorList();
+        boolean reversed = false;
         try (BufferedReader reader = Files.newBufferedReader(Path.of(fileName))) {
 
             // Read the CSV header
@@ -32,6 +33,8 @@ public class TrajectoryUtils {
                 double yPath = Double.parseDouble(tokenizer.nextToken()) + Units.feetToMeters(15.0);
                 double xTangent = Double.parseDouble(tokenizer.nextToken());
                 double yTangent = Double.parseDouble(tokenizer.nextToken());
+                tokenizer.nextToken(); //skipping fixedTheta
+                reversed = Boolean.parseBoolean(tokenizer.nextToken());
                 list.add(new Spline.ControlVector(
                         new double[] {xPath, xTangent, 0},
                         new double[] {yPath, yTangent, 0}));
@@ -40,7 +43,7 @@ public class TrajectoryUtils {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        return TrajectoryGenerator.generateTrajectory(list, trajectoryConfig);
+        return TrajectoryGenerator.generateTrajectory(list, trajectoryConfig.setReversed(reversed));
     }
 
     public static Command startTrajectory(String fileName, TrajectoryConfig trajectoryConfig, Chassis chassis) {
