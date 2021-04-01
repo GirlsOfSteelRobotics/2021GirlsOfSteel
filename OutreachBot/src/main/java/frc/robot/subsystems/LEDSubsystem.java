@@ -73,9 +73,17 @@ public class LEDSubsystem extends SubsystemBase {
         generalLED(20, 21, 255, 255, 0);
         generalLED(21, NUMBER_LED, 153, 51, 255);
     }
+    public void gosColorTest() {
+        for (var i = 0; i < NUMBER_LED; i+=2){
+            m_ledBuffer.setRGB(i, 255, 0, 0);
+        }
+        for (var i = 1; i <NUMBER_LED; i+=2){
+            m_ledBuffer.setRGB(i,255,255,255);
+        }
+    }
     @Override
     public void periodic(){
-        generalLEDTest();
+        gosColorTest();
         m_led.setData(m_ledBuffer);
     }
     public void generalLED(int startLED, int endLED, int rColor, int gColor, int bColor) {
