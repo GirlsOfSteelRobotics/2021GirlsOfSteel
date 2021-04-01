@@ -24,22 +24,29 @@ public class LEDSubsystem extends SubsystemBase {
         m_led.setData(m_ledBuffer);
         m_led.start();
     }
-    private void redLED() {
-        for (var i = 0; i < m_ledBuffer.getLength() / 2; i++) {
-            // Sets the specified LED to the RGB values for red
-            m_ledBuffer.setRGB(i, 255, 0, 0);
-        }
-
-        m_led.setData(m_ledBuffer);
-    }
-    private void blueLED() {
-        for (var i = (NUMBER_LED / 2); i < m_ledBuffer.getLength(); i++) {
-            // Sets the specified LED to the RGB values for red
-            m_ledBuffer.setRGB(i, 0, 0, 255);
-        }
-
-        m_led.setData(m_ledBuffer);
-    }
+//    private void redLED() {
+//        for (var i = 0; i < m_ledBuffer.getLength() / 2; i++) {
+//            // Sets the specified LED to the RGB values for red
+//            m_ledBuffer.setRGB(i, 255, 0, 0);
+//        }
+//
+//        m_led.setData(m_ledBuffer);
+//    }
+//    private void redLED() {
+//        generalLED(0, NUMBER_LED / 2, 255, 0, 0);
+//    }
+//    private void blueLED() {
+//        for (var i = (NUMBER_LED / 2); i < m_ledBuffer.getLength(); i++) {
+//            // Sets the specified LED to the RGB values for red
+//            m_ledBuffer.setRGB(i, 0, 0, 255);
+//        }
+//
+//        m_led.setData(m_ledBuffer);
+//    }
+//    private void blueLED() {
+//        generalLED(NUMBER_LED / 2, NUMBER_LED, 0, 0, 255);
+//
+//    }
     public void rainbow() {
         // For every pixel
         for (var i = 0; i < m_ledBuffer.getLength(); i++) {
@@ -55,13 +62,27 @@ public class LEDSubsystem extends SubsystemBase {
         m_rainbowFirstPixelHue %= 180;
     }
     public void GoSLED() {
-        redLED();
-        blueLED();
+        generalLED(0, NUMBER_LED / 2, 255, 0, 0);
+        generalLED(NUMBER_LED / 2, NUMBER_LED, 0, 0, 255);
+    }
+    //1st 4 blue, next 6 red, next 10 green, next 1 yellow, the rest purple
+    public void generalLEDTest() {
+        generalLED(0, 4, 0, 0, 255);
+        generalLED(4, 10, 255, 0, 0);
+        generalLED(10, 20, 0, 255, 0);
+        generalLED(20, 21, 255, 255, 0);
+        generalLED(21, NUMBER_LED, 153, 51, 255);
     }
     @Override
     public void periodic(){
-        rainbow();
+        generalLEDTest();
         m_led.setData(m_ledBuffer);
+    }
+    public void generalLED(int startLED, int endLED, int rColor, int gColor, int bColor) {
+        for (var i = startLED; i < endLED; i++) {
+            m_ledBuffer.setRGB(i, rColor, gColor, bColor);
+        }
+
     }
 }
 
