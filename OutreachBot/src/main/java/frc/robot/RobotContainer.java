@@ -104,7 +104,7 @@ public class RobotContainer {
 
         SmartDashboard.putData("Auto Mode", m_chooser);
 
-        m_LED.GoSLED();
+        m_LED.rainbow();
     }
 
     /**
