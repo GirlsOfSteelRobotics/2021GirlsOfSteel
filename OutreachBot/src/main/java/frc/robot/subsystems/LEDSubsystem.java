@@ -10,6 +10,8 @@ public class LEDSubsystem extends SubsystemBase {
     private static final int NUMBER_LED = 60;
     private final AddressableLEDBuffer m_ledBuffer;
     private int m_rainbowFirstPixelHue;
+    private int m_pixelCounter;
+    private int m_loopCounter;
 
     public LEDSubsystem() {
         m_led = new AddressableLED(9);
@@ -81,9 +83,30 @@ public class LEDSubsystem extends SubsystemBase {
             m_ledBuffer.setRGB(i,255,255,255);
         }
     }
+
+    public void singlePixel() {
+        generalLED(m_pixelCounter, m_pixelCounter+1, 255, 0, 0);
+        if (m_loopCounter % 5 == 0) {
+            m_pixelCounter ++;
+        }
+
+        if (m_pixelCounter >= NUMBER_LED) {
+            m_pixelCounter = 0;
+        } 
+
+
+    }
+
+    public void clear() {
+        generalLED(0, NUMBER_LED, 0, 0, 0);
+
+    }
+
     @Override
     public void periodic(){
-        gosColorTest();
+        m_loopCounter ++;
+        clear();
+        singlePixel();
         m_led.setData(m_ledBuffer);
     }
     public void generalLED(int startLED, int endLED, int rColor, int gColor, int bColor) {
@@ -93,4 +116,5 @@ public class LEDSubsystem extends SubsystemBase {
 
     }
 }
+
 
