@@ -50,7 +50,7 @@ public class RobotContainer {
     private final Shooter m_shooter = new Shooter();
     private final Collector m_collector = new Collector();
     private final Chassis m_chassis = new Chassis();
-    private final LEDSubsystem m_LED = new LEDSubsystem();
+    private final LEDSubsystem m_led = new LEDSubsystem();
 
     // Joysticks
     private final XboxController m_operatorJoystick = new XboxController(1);
@@ -104,7 +104,7 @@ public class RobotContainer {
 
         SmartDashboard.putData("Auto Mode", m_chooser);
 
-        m_LED.rainbow();
+        m_led.rainbow();
     }
 
     /**
