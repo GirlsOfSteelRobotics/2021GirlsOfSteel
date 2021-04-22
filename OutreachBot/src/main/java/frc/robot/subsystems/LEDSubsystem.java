@@ -18,7 +18,7 @@ public class LEDSubsystem extends SubsystemBase {
     private int m_pixelCounter;
     private int m_loopCounter;
     private double m_fadeCounter;
-    private double m_direction = 0.02;
+    private double m_directionFade = 0.02;
     private final SendableChooser<Runnable> m_userSelectedPatternChooser;
 
     public LEDSubsystem() {
@@ -38,10 +38,9 @@ public class LEDSubsystem extends SubsystemBase {
 
         // PJ's Witchcraft
         m_userSelectedPatternChooser.addOption("rainbow", this::rainbow);
-        m_userSelectedPatternChooser.addOption("gosLED", this::gosLED);
-        m_userSelectedPatternChooser.addOption("generalLEDTest", this::generalLEDTest);
-        m_userSelectedPatternChooser.addOption("gosColorTest", this::gosColorTest);
-        m_userSelectedPatternChooser.addOption("singlePixel", this::singlePixel);
+        m_userSelectedPatternChooser.addOption("gosRedAndBlue", this::gosRedAndBlueLED);
+        m_userSelectedPatternChooser.addOption("gosPolkaDot", this::gosPolkaDot);
+        m_userSelectedPatternChooser.addOption("singlePixel", this::movingPixel);
         m_userSelectedPatternChooser.addOption("fade", this::fade);
 
         // TODO(PJ) Temporary debugging
@@ -70,21 +69,12 @@ public class LEDSubsystem extends SubsystemBase {
         m_rainbowFirstPixelHue %= 180;
     }
 
-    public void gosLED() {
+    public void gosRedAndBlueLED() {
         generalLED(0, NUMBER_LED / 2, 255, 0, 0);
         generalLED(NUMBER_LED / 2, NUMBER_LED, 0, 0, 255);
     }
 
-    //1st 4 blue, next 6 red, next 10 green, next 1 yellow, the rest purple
-    public void generalLEDTest() {
-        generalLED(0, 4, 0, 0, 255);
-        generalLED(4, 10, 255, 0, 0);
-        generalLED(10, 20, 0, 255, 0);
-        generalLED(20, 21, 255, 255, 0);
-        generalLED(21, NUMBER_LED, 153, 51, 255);
-    }
-
-    public void gosColorTest() {
+    public void gosPolkaDot() {
         for (var i = 0; i < NUMBER_LED; i += 2) {
             m_ledBuffer.setRGB(i, 255, 0, 0);
         }
@@ -93,8 +83,8 @@ public class LEDSubsystem extends SubsystemBase {
         }
     }
 
-    public void singlePixel() {
-        generalLED(m_pixelCounter, m_pixelCounter + 1, 255, 0, 0);
+    public void movingPixel() {
+        m_ledBuffer.setRGB(m_pixelCounter, 0, 255, 0);
         if (m_loopCounter % 5 == 0) {
             m_pixelCounter++;
         }
@@ -111,12 +101,12 @@ public class LEDSubsystem extends SubsystemBase {
     @SuppressWarnings("PMD")
     public void fade() {
         generalLED(0, NUMBER_LED, 0, (int) (255 * m_fadeCounter), 0);
-        m_fadeCounter += m_direction;
+        m_fadeCounter += m_directionFade;
         if (m_fadeCounter >= 1) {
-            m_direction *= -1.0;
+            m_directionFade *= -1.0;
         }
         if (m_fadeCounter <= 0) {
-            m_direction *= -1.0;
+            m_directionFade *= -1.0;
         }
 
     }
@@ -147,9 +137,6 @@ public class LEDSubsystem extends SubsystemBase {
         if (differenceInLED > MIDDLE_LED) {
             generalLED(MIDDLE_LED, differenceInLED, 0, 0, 255);
         }
-
-        System.out.println(ledProportion + "," + ledOn + "," + MIDDLE_LED + "," + differenceInLED);
-
     }
 
     @Override
@@ -157,7 +144,7 @@ public class LEDSubsystem extends SubsystemBase {
         m_loopCounter++;
         clear();
         Runnable selectedPattern = m_userSelectedPatternChooser.getSelected();
-        if(selectedPattern != null) {
+        if (selectedPattern != null) {
             selectedPattern.run();
         }
         m_led.setData(m_ledBuffer);
