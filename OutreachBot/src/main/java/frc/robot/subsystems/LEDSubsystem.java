@@ -3,17 +3,23 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class LEDSubsystem extends SubsystemBase {
     private final AddressableLED m_led;
     private static final int NUMBER_LED = 60;
+    private static final double MAX_LIMELIGHT_DEGREE = 10.0;
+    private static final int NUM_LIMELIGHT_LED = 40;
+    private static final int MIDDLE_LED = NUM_LIMELIGHT_LED / 2;
     private final AddressableLEDBuffer m_ledBuffer;
     private int m_rainbowFirstPixelHue;
     private int m_pixelCounter;
     private int m_loopCounter;
     private double m_fadeCounter;
     private double m_direction = 0.02;
+    private final SendableChooser<Runnable> m_userSelectedPatternChooser;
 
     public LEDSubsystem() {
         m_led = new AddressableLED(9);
@@ -27,6 +33,26 @@ public class LEDSubsystem extends SubsystemBase {
         // Set the data
         m_led.setData(m_ledBuffer);
         m_led.start();
+        m_userSelectedPatternChooser = new SendableChooser<>();
+        SmartDashboard.putData("LED Selector", m_userSelectedPatternChooser);
+
+        // PJ's Witchcraft
+        m_userSelectedPatternChooser.addOption("rainbow", this::rainbow);
+        m_userSelectedPatternChooser.addOption("gosLED", this::gosLED);
+        m_userSelectedPatternChooser.addOption("generalLEDTest", this::generalLEDTest);
+        m_userSelectedPatternChooser.addOption("gosColorTest", this::gosColorTest);
+        m_userSelectedPatternChooser.addOption("singlePixel", this::singlePixel);
+        m_userSelectedPatternChooser.addOption("fade", this::fade);
+
+        // TODO(PJ) Temporary debugging
+        m_userSelectedPatternChooser.addOption("limelightCheck(true)", () -> limelightCheck(true));
+        m_userSelectedPatternChooser.addOption("limelightCheck(false)", () -> limelightCheck(false));
+        m_userSelectedPatternChooser.addOption("shooterError(-20)", () -> shooterError(-20));
+        m_userSelectedPatternChooser.addOption("shooterError(-10)", () -> shooterError(-10));
+        m_userSelectedPatternChooser.addOption("shooterError(-5)", () -> shooterError(-5));
+        m_userSelectedPatternChooser.addOption("shooterError(1)", () -> shooterError(1));
+        m_userSelectedPatternChooser.addOption("shooterError(7)", () -> shooterError(7));
+        m_userSelectedPatternChooser.addOption("shooterError(11)", () -> shooterError(11));
     }
 
     public void rainbow() {
@@ -100,9 +126,6 @@ public class LEDSubsystem extends SubsystemBase {
             generalLED(0, 5, 0, 255, 0);
         }
     }
-    private static final double MAX_LIMELIGHT_DEGREE = 10.0;
-    private static final int NUM_LIMELIGHT_LED = 20;
-    private static final int MIDDLE_LED = NUM_LIMELIGHT_LED / 2;
 
     public void shooterError(double limelightError) {
         double ledProportion = Math.abs(limelightError / MAX_LIMELIGHT_DEGREE);
@@ -122,7 +145,7 @@ public class LEDSubsystem extends SubsystemBase {
             generalLED(differenceInLED, MIDDLE_LED, 255, 0, 0);
         }
         if (differenceInLED > MIDDLE_LED) {
-            generalLED(MIDDLE_LED, differenceInLED, 255, 0, 0);
+            generalLED(MIDDLE_LED, differenceInLED, 0, 0, 255);
         }
 
         System.out.println(ledProportion + "," + ledOn + "," + MIDDLE_LED + "," + differenceInLED);
@@ -133,7 +156,10 @@ public class LEDSubsystem extends SubsystemBase {
     public void periodic() {
         m_loopCounter++;
         clear();
-        shooterError(15);
+        Runnable selectedPattern = m_userSelectedPatternChooser.getSelected();
+        if(selectedPattern != null) {
+            selectedPattern.run();
+        }
         m_led.setData(m_ledBuffer);
     }
 
