@@ -13,6 +13,7 @@ repositories {
 dependencies {
     compile wpilibTools.deps.wpilibJava("wpilibj")
     compile "com.revrobotics.frc:SparkMax-java:1.5.4"
+    compile project(":libraries:GirlsOfSteelLib")
 }
 
 test {

@@ -11,6 +11,7 @@ repositories {
 
 dependencies {
     compile wpilibTools.deps.wpilibJava("wpilibj")
+    compile wpilibTools.deps.wpilibJava("ntcore")
 }
 
 test {
