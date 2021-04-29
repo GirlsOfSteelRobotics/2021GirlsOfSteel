@@ -149,7 +149,7 @@ public class Chassis extends SubsystemBase {
         double kMinOutput = -1;
         int smartMotionSlot = 0;
 
-        m_leftProperties = RevPidPropertyBuilder.createBuilder("Chassis", lockConstants, m_leftPidController, 0)
+        m_leftProperties = new RevPidPropertyBuilder("Chassis", lockConstants, m_leftPidController, 0)
             .addP(kp)
             .addI(ki)
             .addD(kd)
@@ -157,7 +157,7 @@ public class Chassis extends SubsystemBase {
             .addMaxVelocity(maxVel)
             .addMaxAcceleration(maxAcc)
             .build();
-        m_rightProperties = RevPidPropertyBuilder.createBuilder("Chassis", lockConstants, m_rightPidController, 0)
+        m_rightProperties = new RevPidPropertyBuilder("Chassis", lockConstants, m_rightPidController, 0)
             .addP(kp)
             .addI(ki)
             .addD(kd)

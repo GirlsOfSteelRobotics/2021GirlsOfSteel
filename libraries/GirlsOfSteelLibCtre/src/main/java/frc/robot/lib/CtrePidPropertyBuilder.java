@@ -6,11 +6,7 @@ public final class CtrePidPropertyBuilder extends PidProperty.Builder implements
     private final BaseMotorController m_motor;
     private final int m_slot;
 
-    public static IPidPropertyBuilder createBuilder(String baseName, boolean isConstant, BaseMotorController motor, int slot) {
-        return new CtrePidPropertyBuilder(baseName, isConstant, motor, slot);
-    }
-
-    private CtrePidPropertyBuilder(String baseName, boolean isConstant, BaseMotorController motor, int slot) {
+    public CtrePidPropertyBuilder(String baseName, boolean isConstant, BaseMotorController motor, int slot) {
         super(baseName, isConstant);
         m_motor = motor;
         m_slot = slot;

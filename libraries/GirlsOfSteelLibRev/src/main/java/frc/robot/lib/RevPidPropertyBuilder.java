@@ -6,11 +6,7 @@ public final class RevPidPropertyBuilder extends PidProperty.Builder implements 
     private final CANPIDController m_pidController;
     private final int m_slot;
 
-    public static IPidPropertyBuilder createBuilder(String baseName, boolean isConstant, CANPIDController pidController, int slot) {
-        return new RevPidPropertyBuilder(baseName, isConstant, pidController, slot);
-    }
-
-    private RevPidPropertyBuilder(String baseName, boolean isConstant, CANPIDController pidController, int slot) {
+    public RevPidPropertyBuilder(String baseName, boolean isConstant, CANPIDController pidController, int slot) {
         super(baseName, isConstant);
         m_pidController = pidController;
         m_slot = slot;
