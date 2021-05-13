@@ -37,8 +37,8 @@ public class RobotContainer {
     private final Shooter m_shooter = new Shooter();
     private final Collector m_collector = new Collector();
     private final Chassis m_chassis = new Chassis();
-    private final LEDSubsystem m_led = new LEDSubsystem();
     private final LimelightSubsystem m_limelight = new LimelightSubsystem();
+    private final LEDSubsystem m_led = new LEDSubsystem(m_limelight);
 
     // Joysticks
     private final XboxController m_operatorJoystick = new XboxController(1);

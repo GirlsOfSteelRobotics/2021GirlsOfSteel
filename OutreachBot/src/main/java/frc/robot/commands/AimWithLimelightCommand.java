@@ -25,8 +25,8 @@ public class AimWithLimelightCommand extends CommandBase {
 
     @Override
     public void execute() {
-        double currentYaw = m_limelightSubsystem.limelightAngle();
-        m_chassis.driveByJoystick(0, Math.signum(currentYaw) * .25);
+        double errorYaw = m_limelightSubsystem.limelightAngle();
+        m_chassis.angleAim(errorYaw);
     }
 
     @Override

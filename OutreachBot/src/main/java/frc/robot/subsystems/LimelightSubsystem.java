@@ -27,7 +27,7 @@ public class LimelightSubsystem extends SubsystemBase {
     }
 
     public boolean targetExists() {
-        return m_targetVisibility.getBoolean(false);
+        return m_targetVisibility.getDouble(0) == 1;
     }
 
     public double limelightDistance() {
