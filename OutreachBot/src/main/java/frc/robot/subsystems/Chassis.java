@@ -13,7 +13,6 @@ package frc.robot.subsystems;
 
 
 import com.revrobotics.CANEncoder;
-import com.revrobotics.CANPIDController;
 import com.revrobotics.CANSparkMaxLowLevel;
 import com.revrobotics.SimableCANSparkMax;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
@@ -114,6 +113,7 @@ public class Chassis extends SubsystemBase {
 
         m_pidController = new PIDController(0.0125, 0, 0);
         m_pidController.setTolerance(1, 1);
+
     }
 
 

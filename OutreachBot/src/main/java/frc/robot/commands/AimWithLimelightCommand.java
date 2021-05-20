@@ -7,7 +7,6 @@ import frc.robot.subsystems.LimelightSubsystem;
 
 public class AimWithLimelightCommand extends CommandBase {
 
-    private static final double YAW_ALLOWABLE_ERROR = 3;
     private final Chassis m_chassis;
     private final LimelightSubsystem m_limelightSubsystem;
 
