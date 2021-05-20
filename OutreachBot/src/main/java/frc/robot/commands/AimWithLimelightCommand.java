@@ -26,15 +26,13 @@ public class AimWithLimelightCommand extends CommandBase {
     @Override
     public void execute() {
         double errorYaw = m_limelightSubsystem.limelightAngle();
-        m_chassis.angleAim(errorYaw);
+        //negative to account for difference in turning with limelight
+        m_chassis.angleAim(-errorYaw);
     }
 
     @Override
     public boolean isFinished() {
-        double currentYaw = m_limelightSubsystem.limelightAngle();
-        boolean complete = Math.abs(currentYaw) < YAW_ALLOWABLE_ERROR;
-        return complete;
-
+        return m_chassis.allowedAngle();
 
     }
 

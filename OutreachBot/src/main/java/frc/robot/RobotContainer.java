@@ -179,6 +179,10 @@ public class RobotContainer {
         return m_chooser.getSelected();
     }
 
+    public void setRobotEnabled(boolean robotEnabled) {
+        m_led.setRobotEnabled(robotEnabled);
+    }
+
 
 }
 

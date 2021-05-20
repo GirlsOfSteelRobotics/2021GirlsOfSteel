@@ -58,6 +58,10 @@ public class LEDSubsystem extends SubsystemBase {
         m_limelight = limelight;
     }
 
+    public void setRobotEnabled(boolean robotEnabled) {
+        m_robotEnabled = robotEnabled;
+    }
+
     public void rainbow() {
         // For every pixel
         for (var i = 0; i < m_ledBuffer.getLength(); i++) {

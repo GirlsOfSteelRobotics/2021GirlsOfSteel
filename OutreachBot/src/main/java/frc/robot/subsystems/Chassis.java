@@ -112,7 +112,8 @@ public class Chassis extends SubsystemBase {
 
         m_coordinateGuiPublisher = new RobotPositionPublisher();
 
-        m_pidController = new PIDController(0, 0, 0);
+        m_pidController = new PIDController(0.0125, 0, 0);
+        m_pidController.setTolerance(1, 1);
     }
 
 
@@ -121,6 +122,10 @@ public class Chassis extends SubsystemBase {
     public void angleAim(double relativeMoveAngle) {
         double turnSpeed = m_pidController.calculate(relativeMoveAngle);
         driveByJoystick(0, turnSpeed);
+    }
+
+    public boolean allowedAngle() {
+        return m_pidController.atSetpoint();
     }
 
     @Override
