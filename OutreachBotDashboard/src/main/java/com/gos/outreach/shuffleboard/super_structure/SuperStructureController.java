@@ -5,18 +5,47 @@ import javafx.beans.binding.DoubleBinding;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
 import javafx.scene.layout.Pane;
+import javafx.scene.shape.Arc;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.transform.Scale;
 
 public class SuperStructureController {
 
-    private static final double MAX_WIDTH = 1; // TODO figure out real value
-    private static final double MAX_HEIGHT = 1; // TODO figure out real value
+    private static final double MAX_WIDTH = 24;
+    private static final double MAX_HEIGHT = 24;
+    private static final double CHASSIS_HEIGHT = 8;
+    private static final double CHASSIS_WIDTH = 24;
+    private static final double CHASSIS_X = 0;
+    private static final double CHASSIS_Y = 16;
+    private static final double HOOD_HEIGHT = 9;
+    private static final double MAX_COLLECTOR_DIST = 8;
+    private static final double COLLECTOR_HEIGHT = 7;
+    private static final double COLLECTOR_WIDTH = 7;
+    private static final double MIN_COLLECTOR_Y = HOOD_HEIGHT;
+    private static final double MIN_COLLECTOR_X = MAX_COLLECTOR_DIST;
+    private static final double MAX_COLLECTOR_X = 0;
+    private static final double MAX_COLLECTOR_Y = HOOD_HEIGHT;
+    private static final double HOOD_Y = HOOD_HEIGHT;
+    private static final double HOOD_X = MAX_COLLECTOR_DIST + COLLECTOR_WIDTH;
 
     @FXML
     private Group m_group;
 
     @FXML
     private Pane m_pane;
+
+    @FXML
+    private Rectangle m_chassis;
+
+    @FXML
+    private Rectangle m_collector;
+
+    @FXML
+    private Arc m_hood;
+
+    @FXML
+    private Circle m_shooterWheel;
 
     @FXML
     public void initialize() {
@@ -38,11 +67,28 @@ public class SuperStructureController {
 
         m_group.getTransforms().add(scale);
         ///////////////////////////////////////////////////////////
+
+        m_chassis.setX(CHASSIS_X);
+        m_chassis.setY(CHASSIS_Y);
+        m_chassis.setHeight(CHASSIS_HEIGHT);
+        m_chassis.setWidth(CHASSIS_WIDTH);
+
+        m_collector.setX(MIN_COLLECTOR_X);
+        m_collector.setY(MIN_COLLECTOR_Y);
+        m_collector.setHeight(COLLECTOR_HEIGHT);
+        m_collector.setWidth(COLLECTOR_WIDTH);
     }
 
 
     public void updateSuperStructure(SuperStructureData superStructureData) {
-        // TODO implement
+        if (superStructureData.isCollectorIn()){
+            m_collector.setX(MIN_COLLECTOR_X);
+            m_collector.setY(MIN_COLLECTOR_Y);
+        }
+        else{
+            m_collector.setX(MAX_COLLECTOR_X);
+            m_collector.setY(MAX_COLLECTOR_Y);
+        }
     }
 
 
