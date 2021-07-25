@@ -34,6 +34,7 @@ public class SuperStructureController {
     private static final double HOOD_ARC_RADIUS = 7;
     private static final double HOOD_ARC_START_ANGLE = 0;
     private static final double HOOD_ARC_LENGTH = 95;
+    private static final double HOOD_ARC_LENGTH_EXTENDED = HOOD_ARC_LENGTH + 20;
 
     @FXML
     private Group m_group;
@@ -103,6 +104,13 @@ public class SuperStructureController {
         else{
             m_collector.setX(MAX_COLLECTOR_X);
             m_collector.setY(MAX_COLLECTOR_Y);
+        }
+
+        if (superStructureData.getHoodAngle() == 0.25) {
+            m_hood.setLength(HOOD_ARC_LENGTH_EXTENDED);
+        }
+        else {
+            m_hood.setLength(HOOD_ARC_LENGTH);
         }
     }
 
