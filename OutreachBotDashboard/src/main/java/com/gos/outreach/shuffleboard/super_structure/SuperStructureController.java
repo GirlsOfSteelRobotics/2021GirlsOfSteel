@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Group;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Arc;
+import javafx.scene.shape.ArcType;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.transform.Scale;
@@ -28,6 +29,11 @@ public class SuperStructureController {
     private static final double MAX_COLLECTOR_Y = HOOD_HEIGHT;
     private static final double HOOD_Y = HOOD_HEIGHT;
     private static final double HOOD_X = MAX_COLLECTOR_DIST + COLLECTOR_WIDTH;
+    private static final double HOOD_ARC_CENTER_INITIAL_X = MAX_COLLECTOR_DIST;
+    private static final double HOOD_ARC_CENTER_INITIAL_Y = HOOD_HEIGHT;
+    private static final double HOOD_ARC_RADIUS = 7;
+    private static final double HOOD_ARC_START_ANGLE = 0;
+    private static final double HOOD_ARC_LENGTH = 95;
 
     @FXML
     private Group m_group;
@@ -77,6 +83,15 @@ public class SuperStructureController {
         m_collector.setY(MIN_COLLECTOR_Y);
         m_collector.setHeight(COLLECTOR_HEIGHT);
         m_collector.setWidth(COLLECTOR_WIDTH);
+
+        m_hood.setCenterX(HOOD_ARC_CENTER_INITIAL_X);
+        m_hood.setCenterY(HOOD_ARC_CENTER_INITIAL_Y);
+        m_hood.setRadiusX(HOOD_ARC_RADIUS);
+        m_hood.setRadiusY(HOOD_ARC_RADIUS);
+        m_hood.setType(ArcType.OPEN);
+        m_hood.setStartAngle(HOOD_ARC_START_ANGLE);
+        m_hood.setLength(HOOD_ARC_LENGTH);
+
     }
 
 
