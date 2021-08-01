@@ -1,5 +1,6 @@
 package com.gos.outreach.shuffleboard.super_structure;
 
+import com.gos.outreach.shuffleboard.Utils;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.DoubleBinding;
 import javafx.fxml.FXML;
@@ -27,14 +28,18 @@ public class SuperStructureController {
     private static final double MIN_COLLECTOR_X = MAX_COLLECTOR_DIST;
     private static final double MAX_COLLECTOR_X = 0;
     private static final double MAX_COLLECTOR_Y = HOOD_HEIGHT;
-    private static final double HOOD_Y = HOOD_HEIGHT;
-    private static final double HOOD_X = MAX_COLLECTOR_DIST + COLLECTOR_WIDTH;
     private static final double HOOD_ARC_CENTER_INITIAL_X = MAX_COLLECTOR_DIST;
     private static final double HOOD_ARC_CENTER_INITIAL_Y = HOOD_HEIGHT;
     private static final double HOOD_ARC_RADIUS = 7;
     private static final double HOOD_ARC_START_ANGLE = 0;
-    private static final double HOOD_ARC_LENGTH = 95;
-    private static final double HOOD_ARC_LENGTH_EXTENDED = HOOD_ARC_LENGTH + 20;
+    private static final double HOOD_ARC_LENGTH = 45;
+    private static final double SHOOTER_WHEEL_RADIUS = 1;
+    private static final double SHOOTER_WHEEL_CENTER_X = 10;
+    private static final double SHOOTER_WHEEL_CENTER_Y = 9;
+    private static final double SHOOTER_BASE_X = 10;
+    private static final double SHOOTER_BASE_Y = MIN_COLLECTOR_Y;
+    private static final double SHOOTER_BASE_HEIGHT = 7;
+    private static final double SHOOTER_BASE_WIDTH = 5;
 
     @FXML
     private Group m_group;
@@ -47,6 +52,9 @@ public class SuperStructureController {
 
     @FXML
     private Rectangle m_collector;
+
+    @FXML
+    private Rectangle m_shooterBase;
 
     @FXML
     private Arc m_hood;
@@ -93,25 +101,33 @@ public class SuperStructureController {
         m_hood.setStartAngle(HOOD_ARC_START_ANGLE);
         m_hood.setLength(HOOD_ARC_LENGTH);
 
+        m_shooterWheel.setCenterX(SHOOTER_WHEEL_CENTER_X);
+        m_shooterWheel.setCenterY(SHOOTER_WHEEL_CENTER_Y);
+        m_shooterWheel.setRadius(SHOOTER_WHEEL_RADIUS);
+
+        m_shooterBase.setX(SHOOTER_BASE_X);
+        m_shooterBase.setY(SHOOTER_BASE_Y);
+        m_shooterBase.setHeight(SHOOTER_BASE_HEIGHT);
+        m_shooterBase.setWidth(SHOOTER_BASE_WIDTH);
+
     }
 
 
     public void updateSuperStructure(SuperStructureData superStructureData) {
-        if (superStructureData.isCollectorIn()){
+        if (superStructureData.isCollectorIn()) {
             m_collector.setX(MIN_COLLECTOR_X);
             m_collector.setY(MIN_COLLECTOR_Y);
         }
-        else{
+        else {
             m_collector.setX(MAX_COLLECTOR_X);
             m_collector.setY(MAX_COLLECTOR_Y);
         }
+        m_collector.setFill(Utils.getMotorColor(superStructureData.getCollectorSpeed()));
 
-        if (superStructureData.getHoodAngle() == 0.25) {
-            m_hood.setLength(HOOD_ARC_LENGTH_EXTENDED);
-        }
-        else {
-            m_hood.setLength(HOOD_ARC_LENGTH);
-        }
+        m_hood.setLength(superStructureData.getHoodAngle());
+        m_hood.setStroke(Utils.getMotorColor(superStructureData.getHoodMotorSpeed()));
+
+        m_shooterWheel.setFill(Utils.getMotorColor(superStructureData.getShooterMotorSpeed()));
     }
 
 
