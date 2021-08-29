@@ -91,5 +91,13 @@ public class Collector extends SubsystemBase {
         m_fourBarLeft.set(0); 
         m_fourBarRight.set(0); 
     }
+
+    public boolean getCollectorIn() {
+        return true;
+    }
+
+    public double getCollectorSpeed() {
+        return m_collector.get();
+    }
 }
 

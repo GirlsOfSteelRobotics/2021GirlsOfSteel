@@ -148,4 +148,15 @@ public class Shooter extends SubsystemBase {
         return Math.abs(m_goalAngle - m_hoodEncoder.getPosition()) <= ALLOWED_ANGLE_ERROR;
     }
 
+    public double getHoodAngle() {
+        return m_hoodEncoder.getPosition();
+    }
+
+    public double getHoodMotorSpeed() {
+        return m_shooterHood.get();
+    }
+
+    public double getShooterMotorSpeed() {
+        return m_shooterWheel.get();
+    }
 }
