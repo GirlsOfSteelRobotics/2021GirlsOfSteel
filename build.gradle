@@ -1,7 +1,9 @@
 
-allprojects
-{
-    apply from: "${rootDir}/styleguide/styleguide.gradle"
+plugins {
+    id 'com.diffplug.spotless' version '5.5.0' apply false
+    id 'com.github.spotbugs' version '5.0.0-beta.1' apply false
 }
 
-apply from: "widget_helper.gradle"
+allprojects {
+    apply from: "${rootDir}/styleguide/styleguide.gradle"
+}

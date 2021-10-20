@@ -1,2 +1,3 @@
-# GirlsOfSteel2021
-Girls of Steel Robotics repo for the 2020-2021 season
+# Girls of Steel Robotics
+
+This repository contains a monorepo for FRC3504, The Girls of Steel

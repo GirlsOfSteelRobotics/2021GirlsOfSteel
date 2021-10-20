@@ -1,9 +1,10 @@
 import yaml
 from lib.generate_dashboard_structure import WidgetGenerator, TopLevelGenerator, maybe_add_standalone_buttons
 import os
+import sys
 
 
-def main():
+def main(argv):
     import argparse
 
     parser = argparse.ArgumentParser()
@@ -19,7 +20,7 @@ def main():
     parser.add_argument('--force_all', action="store_true", help='Force overwriting all of the non-autogenerted files')
     parser.add_argument('--force_standard', action="store_true", help='Force overwriting all of the non-autogenerted files')
 
-    args = parser.parse_args()
+    args = parser.parse_args(argv)
     this_dir = os.path.dirname(os.path.realpath(__file__))
 
     template_dir = os.path.join(this_dir, "lib", "templates")
@@ -62,4 +63,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    main(sys.argv[1:])
